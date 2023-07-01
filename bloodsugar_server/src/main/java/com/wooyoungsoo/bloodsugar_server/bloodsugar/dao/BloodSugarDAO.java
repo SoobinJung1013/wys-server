@@ -12,6 +12,4 @@ public interface BloodSugarDAO extends JpaRepository<BloodSugar, Long> {
     BloodSugar save(BloodSugar bloodSugar);
     Optional<BloodSugar> findById(Long id);
     List<BloodSugar> findAll();
-//    BloodSugar update(BloodSugar bloodSugar);
-//    void deleteById(Long id);
 }

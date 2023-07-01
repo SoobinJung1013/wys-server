@@ -32,13 +32,4 @@ public class BloodSugarController {
         return bloodSugarService.getAllBloodSugar();
     }
 
-//    @PutMapping("/{id}")
-//    public BloodSugarDTO updateBloodSugar(@PathVariable Long id, @RequestBody BloodSugarDTO bloodSugarDTO) {
-//        return bloodSugarService.updateBloodSugar(id, bloodSugarDTO);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public void deleteBloodSugar(@PathVariable Long id) {
-//        bloodSugarService.deleteBloodSugar(id);
-//    }
 }

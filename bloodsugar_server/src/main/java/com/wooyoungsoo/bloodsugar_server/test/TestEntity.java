@@ -12,9 +12,6 @@ public class TestEntity {
     private Long id;
     private String name;
 
-    // 생성자, getter, setter 등 필요한 메소드 추가
-
-    // 기본 생성자
     public TestEntity() {
     }
 
@@ -22,6 +19,4 @@ public class TestEntity {
         this.name = name;
     }
 
-    // Getter 및 Setter 메소드
-    // ...
 }

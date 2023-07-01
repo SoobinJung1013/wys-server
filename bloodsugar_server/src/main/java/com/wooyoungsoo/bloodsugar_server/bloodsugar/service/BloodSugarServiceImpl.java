@@ -42,17 +42,4 @@ public class BloodSugarServiceImpl implements BloodSugarService{
                 .map(BloodSugarMapper::mapEntityToDto)
                 .collect(Collectors.toList());
     }
-
-//    @Override
-//    public BloodSugarDTO updateBloodSugar(Long id, BloodSugarDTO bloodSugarDTO) {
-//        BloodSugar bloodSugar = BloodSugarMapper.mapDtoToEntity(bloodSugarDTO);
-//        bloodSugar.setId(id);
-//        BloodSugar updatedBloodSugar = bloodSugarDAO.update(bloodSugar);
-//        return BloodSugarMapper.mapEntityToDto(updatedBloodSugar);
-//    }
-//
-//    @Override
-//    public void deleteBloodSugar(Long id) {
-//        bloodSugarDAO.deleteById(id);
-//    }
 }
