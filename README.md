@@ -1,7 +1,7 @@
 # poc server test
 
 ## How to Run ? 
-### Set .env file  
+### set .env  
 
 |NAME|VAlUE|
 |---|:---|
@@ -16,7 +16,7 @@
 
 
 
-### Docker 
+### docker compose build and up
 
 ```shell
 cd bloodsugar_server
