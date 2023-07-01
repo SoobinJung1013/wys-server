@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'python_server'
+    static_configs:
+      - targets: ['python_server:8000']
+  - job_name: 'spring_server'
+    static_configs:
+      - targets: ['python_server:8080']
+      
