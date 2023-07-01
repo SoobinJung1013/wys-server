@@ -6,7 +6,7 @@
 |NAME|VAlUE|
 |---|:---|
 |MYSQL_HOST|mysql host name for python server|
-|MYSQL_DATABAS|mysql database name|
+|MYSQL_DATABASE|mysql database name|
 |MYSQL_USER|mysql user name|
 |MYSQL_PASSWORD|mysql user password|
 |MYSQL_ROOT_PASSWORD|mysqlroot password|
