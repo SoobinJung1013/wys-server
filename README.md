@@ -5,10 +5,10 @@
 
 |NAME|VAlUE|
 |---|:---|
-|MYSQL_HOST| mysql host name|
-|MYSQL_DATABAS|database name|
-|MYSQL_USER|user name|
-|MYSQL_PASSWORD|user password|
+|MYSQL_HOST|mysql host name for python server|
+|MYSQL_DATABAS|mysql database name|
+|MYSQL_USER|mysql user name|
+|MYSQL_PASSWORD|mysql user password|
 |MYSQL_ROOT_PASSWORD|root password|
 |DATABASE_URL|db url for spring server|
 |DATABASE_USERNAME|db username for spring server|
