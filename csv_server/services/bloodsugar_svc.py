@@ -1,5 +1,9 @@
+
 import csv
 from sqlalchemy.orm import Session
+from fastapi import File
+from typing import List
+
 
 from models.bloodsugar_model import BloodSugar
 
@@ -8,10 +12,7 @@ def get_data(db: Session, skip: int = 0, limit: int = 100):
     return db.query(BloodSugar).offset(skip).limit(limit).all()
 
 
-def save_data(file_path: str, db: Session):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        lines = list(reader)
+def save_data(lines: List[List[str]], db: Session):
 
     for line in lines[3:]:
         device = line[0]
