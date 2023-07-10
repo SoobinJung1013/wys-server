@@ -1,8 +1,19 @@
 package com.wooyoungsoo.bloodsugar_server.bloodsugar.mapper;
 
 import com.wooyoungsoo.bloodsugar_server.bloodsugar.dto.BloodSugarDTO;
+import com.wooyoungsoo.bloodsugar_server.bloodsugar.dto.BloodSugarLineChartDTO;
 import com.wooyoungsoo.bloodsugar_server.bloodsugar.entity.BloodSugar;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
+
+@Getter
+@Setter
+@Builder
+@Data
+@Component
 public class BloodSugarMapper {
     public static BloodSugarDTO mapEntityToDto(BloodSugar bloodSugar) {
         return BloodSugarDTO.builder()
@@ -19,6 +30,14 @@ public class BloodSugarMapper {
                 .deviceType(bloodSugarDTO.getDeviceType())
                 .pastBloodSugar(bloodSugarDTO.getPastBloodSugar())
                 .scanBloodSugar(bloodSugarDTO.getScanBloodSugar())
+                .build();
+    }
+
+    public BloodSugarLineChartDTO toDTO(BloodSugar bloodSugar) {
+
+        return BloodSugarLineChartDTO.builder()
+                .timestampEpoch(bloodSugar.getTimestamp().atZone(ZoneOffset.UTC).toInstant().toEpochMilli())
+                .pastBloodSugar(bloodSugar.getPastBloodSugar())
                 .build();
     }
 }
