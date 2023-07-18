@@ -1,0 +1,172 @@
+version: '3.8'
+services:
+  csv_server:
+    build:
+      context: .
+      dockerfile: ./csv_server/Dockerfile
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - mysql
+      - prometheus
+    env_file:
+      - .env
+    volumes:
+      - ./csv_server:/app
+      - ./wait-for-it.sh:/wait-for-it.sh
+    command: /wait-for-it.sh mysql:3306 -t 10 -- python -m uvicorn main:app --host 0.0.0.0 --port 8000
+    networks:
+      - wys-server
+
+  api_server:
+    build:
+      context: .
+      dockerfile: ./bloodsugar_server/Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+      - prometheus
+    env_file:
+      - .env
+    volumes:
+      - ./wait-for-it.sh:/wait-for-it.sh
+    networks:
+      - wys-server
+    command: /wait-for-it.sh mysql:3306 -t 10 -- java -jar app.jar
+
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -h localhost --silent" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - wys-server
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongodb_data:/data/db
+    env_file:
+      - .env
+    command: mongod --auth
+    networks:
+      - wys-server
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - wys-server
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - ./prometheus/data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    restart: always
+    links:
+      - cadvisor:cadvisor
+      - alertmanager:alertmanager
+    depends_on:
+      - cadvisor
+    networks:
+      - wys-server
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    restart: always
+    networks:
+      - wys-server
+
+  node_exporter:
+    image: prom/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    ports:
+      - 9100:9100
+    restart: always
+    deploy:
+      mode: global
+    networks:
+      - wys-server
+
+  cadvisor:
+    # platform: linux/amd64
+    # image: gcr.io/cadvisor/cadvisor:latest
+    image: zcube/cadvisor
+    ports:
+      - 8081:8080
+    privileged: true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    restart: always
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    networks:
+      - wys-server
+
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    ports:
+      - 9093:9093
+    networks:
+      - wys-server
+
+volumes:
+  mysql_data:
+  mongodb_data:
+
+
+networks:
+  wys-server:

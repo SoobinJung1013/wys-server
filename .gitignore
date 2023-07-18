@@ -3,3 +3,6 @@
 .vscode
 mongodb_data/
 mysql_data/
+
+prometheus/data
+grafana/data

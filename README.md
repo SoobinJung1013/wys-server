@@ -54,6 +54,11 @@ docker-compose up --build
 docker-compose up --build -d
 ```
 
+```shell
+# m1이면 cadvisor image 변경해주어야 한다. 
+docker compose -f docker-compose.prod.yml up
+```
+
 <br />
 
 ```shell
