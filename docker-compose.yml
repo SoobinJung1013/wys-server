@@ -8,7 +8,7 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - csv_rdb
+      - mysql
       # - prometheus
     env_file:
       - .env
@@ -26,7 +26,7 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - csv_rdb
+      - mysql
     env_file:
       - .env
     volumes:
@@ -35,7 +35,7 @@ services:
       - wys-server
     command: /wait-for-it.sh mysql:3306 -t 10 -- java -jar app.jar
 
-  csv_rdb:
+  mysql:
     image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -44,13 +44,25 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./mysql_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: [ "CMD-SHELL", "mysqladmin ping -h localhost --silent" ]
       interval: 10s
       timeout: 5s
       retries: 3
+    networks:
+      - wys-server
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongodb_data:/data/db
+    env_file:
+      - .env
+    command: mongod --auth
     networks:
       - wys-server
 
@@ -72,6 +84,7 @@ services:
 
 volumes:
   mysql_data:
+  mongodb_data:
 
 
 networks:
