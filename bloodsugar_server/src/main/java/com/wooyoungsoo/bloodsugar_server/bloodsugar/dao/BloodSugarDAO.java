@@ -11,7 +11,8 @@ import java.util.Optional;
 @Repository
 public interface BloodSugarDAO extends JpaRepository<BloodSugar, Long> {
     BloodSugar save(BloodSugar bloodSugar);
-    Optional<BloodSugar> findById(Long id);
+
     List<BloodSugar> findAll();
 
-    List<BloodSugar> findByDeviceTypeAndTimestampBetween(Integer deviceType, LocalDateTime start, LocalDateTime end);}
+    List<BloodSugar> findByDeviceTypeAndTimestampBetween(Integer deviceType, LocalDateTime start, LocalDateTime end);
+}

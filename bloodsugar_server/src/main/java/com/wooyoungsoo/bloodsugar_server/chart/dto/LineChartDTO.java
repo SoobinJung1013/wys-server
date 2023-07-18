@@ -1,4 +1,4 @@
-package com.wooyoungsoo.bloodsugar_server.bloodsugar.dto;
+package com.wooyoungsoo.bloodsugar_server.chart.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class BloodSugarLineChartDTO {
+public class LineChartDTO {
     private Long timestampEpoch;
     private Integer pastBloodSugar;
 }
