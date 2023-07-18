@@ -1,9 +1,9 @@
 from botocore.exceptions import ClientError
 import csv
-from fastapi import APIRouter,  UploadFile
+from fastapi import APIRouter,  UploadFile, Depends, File
 from sqlalchemy.orm import Session
 
-from config.s3 import s3
+from config.s3_bucket import s3
 
 from database import SessionLocal, engine
 from schemas import bloodsugar_schema
