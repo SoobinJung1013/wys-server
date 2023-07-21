@@ -1,6 +1,7 @@
 .env
 .DS_Store
 .vscode
+.idea
 .database/
 mongodb_data/
 mysql_data/
