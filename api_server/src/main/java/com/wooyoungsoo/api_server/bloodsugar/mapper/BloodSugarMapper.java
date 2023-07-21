@@ -11,8 +11,6 @@ import java.time.ZoneOffset;
 @Getter
 @Builder
 @Component
-@AllArgsConstructor
-@NoArgsConstructor
 public class BloodSugarMapper {
     public static BloodSugarDTO mapEntityToDto(BloodSugar bloodSugar) {
         return BloodSugarDTO.builder()
