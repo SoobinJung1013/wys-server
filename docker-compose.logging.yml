@@ -67,8 +67,7 @@ services:
     entrypoint: "filebeat -e -strict.perms=false"
     volumes:
       - ./logging/filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      # - ./nginx/log:/var/log/nginx # nginx log path (require same option on nginx container)
-      - ./logging/var/log:/var/log # nginx log path (require same option on nginx container)
+      - ./api_server/logs:/var/log/api_server # api_server log path (require same option on api_server container)
     depends_on:
       - logstash
       - elasticsearch

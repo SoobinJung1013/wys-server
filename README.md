@@ -35,17 +35,23 @@
 |MONGO_PORT|mongo port for crawling server|
 |MONGO_DATABASE|mongo database for crawling server|
 
+#### elk stack version
+|NAME|VAlUE|
+|---|:---|
+|ELK_VERSION|elk stack version|
+
 
 ### 2️⃣ docker compose build and up
 
 ```shell
-cd bloodsugar_server
+cd api_server
 ./gradlew clean build -x test
 
 ```
 
 <br />
 
+local
 
 ```shell
 cd ../
@@ -54,15 +60,44 @@ docker-compose up --build
 docker-compose up --build -d
 ```
 
+
+prod
 ```shell
 # m1이면 cadvisor image 변경해주어야 한다. 
 docker compose -f docker-compose.prod.yml up
 ```
 
+prod
+```shell
+# m1이면 cadvisor image 변경해주어야 한다. 
+docker compose -f docker-compose.prod.yml up
+```
+
+logging
+```shell
+# m1이면 cadvisor image 변경해주어야 한다. 
+docker compose -f docker-compose.logging.yml up
+```
+
+### 3️⃣ docker compose down
+
 <br />
 
+local
 ```shell
 docker-compose down
 # or 
 docker-compose down -v ## delete volumn
 ```
+
+prod
+```shell
+docker-compose -f docker-compose.prod.yml down
+```
+
+logging
+```shell
+# m1이면 cadvisor image 변경해주어야 한다. 
+docker compose -f docker-compose.logging.yml down
+```
+
