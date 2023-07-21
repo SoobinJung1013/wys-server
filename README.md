@@ -101,3 +101,10 @@ logging
 docker compose -f docker-compose.logging.yml down
 ```
 
+
+
+## Load Test Command
+
+```shell
+k6 run simple_load_test.js
+```

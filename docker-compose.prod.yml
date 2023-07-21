@@ -32,6 +32,7 @@ services:
       - .env
     volumes:
       - ./wait-for-it.sh:/wait-for-it.sh
+      - ./api_server/logs:/app/logs
     networks:
       - wys-server
     command: /wait-for-it.sh mysql:3306 -t 10 -- java -jar app.jar

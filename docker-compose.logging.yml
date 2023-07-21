@@ -23,6 +23,8 @@ services:
       # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
     restart: unless-stopped
+    networks:
+      - wys-server
 
   logstash:
     build:
@@ -43,6 +45,8 @@ services:
     depends_on:
       - elasticsearch
     restart: unless-stopped
+    networks:
+      - wys-server
 
   kibana:
     build:
@@ -58,6 +62,8 @@ services:
     depends_on:
       - elasticsearch
     restart: unless-stopped
+    networks:
+      - wys-server
 
   filebeat:
     build:
@@ -72,6 +78,12 @@ services:
       - logstash
       - elasticsearch
       - kibana
+    networks:
+      - wys-server
 
 volumes:
   elasticsearch:
+
+
+networks:
+  wys-server:

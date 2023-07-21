@@ -47,6 +47,25 @@
         </rollingPolicy>
     </appender>
 
+    <appender name="ERROR_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./logs/error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./was-logs/error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>180</maxHistory>
+        </rollingPolicy>
+    </appender>
+
 <!--    <root level="info">-->
 <!--        <appender-ref ref="console" />-->
 <!--    </root>-->
@@ -58,6 +77,7 @@
 <!--        <appender-ref ref="rollingFile"/>-->
         <appender-ref ref="INFO_LOG" />
         <appender-ref ref="WARN_LOG" />
+        <appender-ref ref="ERROR_LOG" />
         <appender-ref ref="console" />
     </root>
 <!--    <root level="debug">-->
