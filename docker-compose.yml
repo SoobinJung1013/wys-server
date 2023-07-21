@@ -9,6 +9,7 @@ services:
       - 8000:8000
     depends_on:
       - mysql
+
     env_file:
       - .env
     volumes:

@@ -4,5 +4,6 @@
 mongodb_data/
 mysql_data/
 
-prometheus/data
-grafana/data
+monitoring/prometheus/data
+monitoring/grafana/data
+logging/var/log

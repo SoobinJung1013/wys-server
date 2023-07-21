@@ -80,8 +80,8 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - ./prometheus/:/etc/prometheus/
-      - ./prometheus/data:/prometheus
+      - ./monitoring/prometheus/:/etc/prometheus/
+      - ./monitoring/prometheus/data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -103,10 +103,10 @@ services:
     depends_on:
       - prometheus
     volumes:
-      - ./grafana/data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - ./monitoring/grafana/data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
-      - ./grafana/config.monitoring
+      - ./monitoring/grafana/config.monitoring
     restart: always
     networks:
       - wys-server
@@ -154,7 +154,7 @@ services:
   alertmanager:
     image: prom/alertmanager
     volumes:
-      - ./alertmanager:/etc/alertmanager
+      - ./monitoring/alertmanager:/etc/alertmanager
     command:
       - '--config.file=/etc/alertmanager/config.yml'
       - '--storage.path=/alertmanager'
