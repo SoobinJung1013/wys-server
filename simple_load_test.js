@@ -7,7 +7,7 @@ export let options = {
 };
 
 export default function () {
-    const response = http.get('http://localhost:8080/tests/log');
+    const response = http.get('http://YOUR_URL');
 
     if (response.status === 200) {
         console.log('성공적인 응답입니다!');
