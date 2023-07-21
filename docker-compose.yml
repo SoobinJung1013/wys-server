@@ -22,7 +22,7 @@ services:
   api_server:
     build:
       context: .
-      dockerfile: ./api_server/Dockerfile
+      dockerfile: ./api-server/Dockerfile
     ports:
       - 8080:8080
     depends_on:

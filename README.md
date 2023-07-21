@@ -51,7 +51,7 @@ cd api_server
 
 <br />
 
-local
+> local
 ```shell
 cd ../
 docker-compose up --build 
@@ -59,7 +59,7 @@ docker-compose up --build
 docker-compose up --build -d
 ```
 
-prod
+> prod
 ```shell
 # m1이면 cadvisor image 변경해주어야 한다. 
 docker compose -f docker-compose.prod.yml -f docker-compose.logging.yml up
@@ -69,28 +69,31 @@ docker compose -f docker-compose.prod.yml -f docker-compose.logging.yml up
 
 <br />
 
-local
+> local
 ```shell
 docker-compose down
 # or 
 docker-compose down -v ## delete volumn
 ```
 
-prod
+> prod
 ```shell
 docker-compose -f docker-compose.prod.yml -f docker-compose.logging.yml down
 ```
 
+<br />
+
+## Run Crawlig Server
+
+```shell
+cd crawling_server
+```
+
+<br />
 
 ## Load Test Command
 
 spring server
-```shell
-k6 run simple_load_test.js
-```
-
-## Load Test Command
-
 ```shell
 k6 run simple_load_test.js
 ```

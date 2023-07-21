@@ -5,12 +5,14 @@ from models import bloodsugar_model
 
 from database import SessionLocal, engine
 from routers import bloodsugar_router
+from prometheus_fastapi_instrumentator import Instrumentator
 
 
 bloodsugar_model.Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI()
+Instrumentator().instrument(app).expose(app)
 
 
 @app.get("/")

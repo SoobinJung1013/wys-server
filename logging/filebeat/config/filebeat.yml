@@ -1,7 +1,7 @@
 filebeat.inputs:
   - type: log
     paths:
-      - /var/log/api_server/*.log
+      - /var/log/api-server/*.log
 
 output.logstash:
   enabled: true

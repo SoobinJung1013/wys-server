@@ -19,10 +19,10 @@ services:
     networks:
       - wys-server
 
-  api_server:
+  api-server:
     build:
       context: .
-      dockerfile: ./api_server/Dockerfile
+      dockerfile: ./api-server/Dockerfile
     ports:
       - 8080:8080
     depends_on:
@@ -32,10 +32,10 @@ services:
       - .env
     volumes:
       - ./wait-for-it.sh:/wait-for-it.sh
-      - ./api_server/logs:/app/logs
+      - ./api-server/logs:/app/logs
+    command: /wait-for-it.sh mysql:3306 -t 10 -- java -jar app.jar
     networks:
       - wys-server
-    command: /wait-for-it.sh mysql:3306 -t 10 -- java -jar app.jar
 
   mysql:
     image: mysql:8.0
@@ -90,10 +90,10 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     restart: always
     links:
-      - cadvisor:cadvisor
+      # - cadvisor:cadvisor
       - alertmanager:alertmanager
-    depends_on:
-      - cadvisor
+    # depends_on:
+    #   - cadvisor
     networks:
       - wys-server
 
@@ -130,27 +130,26 @@ services:
       mode: global
     networks:
       - wys-server
-
-  cadvisor:
+    # cadvisor:
     # platform: linux/amd64
     # image: gcr.io/cadvisor/cadvisor:latest
-    image: zcube/cadvisor
-    ports:
-      - 8081:8080
-    privileged: true
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-      - /dev/disk/:/dev/disk:ro
-    restart: always
-    deploy:
-      mode: global
-      restart_policy:
-        condition: on-failure
-    networks:
-      - wys-server
+    # image: zcube/cadvisor
+    # ports:
+    #   - 8081:8080
+    # privileged: true
+    # volumes:
+    #   - /:/rootfs:ro
+    #   - /var/run:/var/run:rw
+    #   - /sys:/sys:ro
+    #   - /var/lib/docker/:/var/lib/docker:ro
+    #   - /dev/disk/:/dev/disk:ro
+    # restart: always
+    # deploy:
+    #   mode: global
+    #   restart_policy:
+    #     condition: on-failure
+    # networks:
+    #   - wys-server
 
   alertmanager:
     image: prom/alertmanager
