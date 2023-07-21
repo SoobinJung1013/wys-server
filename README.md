@@ -52,7 +52,6 @@ cd api_server
 <br />
 
 local
-
 ```shell
 cd ../
 docker-compose up --build 
@@ -60,23 +59,10 @@ docker-compose up --build
 docker-compose up --build -d
 ```
 
-
 prod
 ```shell
 # m1이면 cadvisor image 변경해주어야 한다. 
-docker compose -f docker-compose.prod.yml up
-```
-
-prod
-```shell
-# m1이면 cadvisor image 변경해주어야 한다. 
-docker compose -f docker-compose.prod.yml up
-```
-
-logging
-```shell
-# m1이면 cadvisor image 변경해주어야 한다. 
-docker compose -f docker-compose.logging.yml up
+docker compose -f docker-compose.prod.yml -f docker-compose.logging.yml up
 ```
 
 ### 3️⃣ docker compose down
@@ -92,16 +78,16 @@ docker-compose down -v ## delete volumn
 
 prod
 ```shell
-docker-compose -f docker-compose.prod.yml down
+docker-compose -f docker-compose.prod.yml -f docker-compose.logging.yml down
 ```
 
-logging
+
+## Load Test Command
+
+spring server
 ```shell
-# m1이면 cadvisor image 변경해주어야 한다. 
-docker compose -f docker-compose.logging.yml down
+k6 run simple_load_test.js
 ```
-
-
 
 ## Load Test Command
 
