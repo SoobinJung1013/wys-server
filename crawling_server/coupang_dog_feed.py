@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from config import MONGO_ADMIN, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DATABASE
 
-# Mongo DB Ceonnection
 client = MongoClient(
     f"mongodb://{MONGO_ADMIN}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}")
 db = client[MONGO_DATABASE]
@@ -15,7 +14,7 @@ rank = 1
 done = False
 
 
-for page in range(1, 6):  # 1~5페이지까지
+for page in range(1, 6):
     if done == True:
         break
     print(page, "번째 페이지 입니다. ")
@@ -45,28 +44,24 @@ for page in range(1, 6):  # 1~5페이지까지
             html = response.text
             soup = BeautifulSoup(html, 'html.parser')
 
-            # 브랜드 이름
             try:
                 brand_name = soup.select_one(
                     "a.prod-brand-name").get_text(strip=True)
             except:
                 brand_name = ""
 
-            # 상품 이름
             try:
                 product_name = soup.select_one(
                     "h2.prod-buy-header__title").get_text(strip=True)
             except:
                 product_name = ""
 
-            # 상품 가격
             try:
                 product_price = soup.select_one(
                     "span.total-price > strong").text
             except:
                 product_price = 0
 
-            # 이미지 URL
             try:
                 image_url = "https:" + \
                     soup.select_one("#repImageContainer > img")['src']
@@ -82,7 +77,6 @@ for page in range(1, 6):  # 1~5페이지까지
                 "sub_url": sub_url
             })
 
-            # 상품 디테일
             try:
                 attr_items = soup.select(
                     "div.prod-description > ul > li")
@@ -98,10 +92,6 @@ for page in range(1, 6):  # 1~5페이지까지
                     })
             except:
                 pass
-
-            print(rank, brand_name, product_name,
-                  product_price, image_url, sub_url)
-            print("----------------------------------------------")
 
             collection.insert_one(data)
 

@@ -14,15 +14,14 @@ keyword = "고양이 사료"
 rank = 1
 done = False
 
-
-for page in range(1, 6):  # 1~5페이지까지
+for page in range(1, 6):
     if done == True:
         break
     print(page, "번째 페이지 입니다. ")
-    main_url = f"https://www.coupang.com/np/search?q={keyword}&page={page}"
+    main_url = f"https://search.danawa.com/dsearch.php?query={keyword}&page={page}"
 
     header = {
-        'Host': 'www.coupang.com',
+        'Host': 'https://danawa.com/',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:76.0) Gecko/20100101 Firefox/76.0',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'Accept-Language': 'ko-KR,ko;q=0.8,en-US;q=0.5,en;q=0.3',
@@ -33,7 +32,7 @@ for page in range(1, 6):  # 1~5페이지까지
     soup = BeautifulSoup(html, 'html.parser')
 
     links = soup.select("a.search-product-link")
-    # print(links)
+
     for link in links:
         data = {}
         if len(link.select("span.ad-badge-text")) > 0:
@@ -98,10 +97,6 @@ for page in range(1, 6):  # 1~5페이지까지
                     })
             except:
                 pass
-
-            print(rank, brand_name, product_name,
-                  product_price, image_url, sub_url)
-            print("----------------------------------------------")
 
             collection.insert_one(data)
 
