@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 from pymongo import MongoClient
-from config import MONGO_ADMIN, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DATABASE
+from common.config import MONGO_ADMIN, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DATABASE
 
 
 # Mongo DB Ceonnection
@@ -55,7 +55,7 @@ for page in range(1, 6):
         try:
             prod_name = soup.select_one(
                 "span.title").get_text(strip=True)
-            print("prod_name : ", prod_name)
+            print("[", rank,  "]", "prod_name : ", prod_name)
         except:
             prod_name = ""
 
@@ -118,15 +118,14 @@ for page in range(1, 6):
                             if ths[idx].text == "":
                                 pass
                             else:
-                                data_dict[ths[idx].text] = tds[idx].text.strip()
+                                data_dict[ths[idx].text] = tds[idx].text.split(" ")[
+                                    0].strip()
                         else:
                             if ths[idx].text == "":
                                 pass
                             else:
                                 data_dict[current_key].append(
                                     ths[idx].text.strip())
-
-        # print("data_dict : ", data_dict)
 
         collection.insert_one(data_dict)  # mongo db save
 

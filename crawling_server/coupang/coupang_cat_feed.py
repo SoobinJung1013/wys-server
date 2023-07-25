@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
-from config import MONGO_ADMIN, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DATABASE
+from common.config import MONGO_ADMIN, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DATABASE
 
 # Mongo DB Ceonnection
 client = MongoClient(
@@ -9,7 +9,7 @@ client = MongoClient(
 db = client[MONGO_DATABASE]
 collection = db["cat_feed"]
 
-keyword = "고양이 사료"
+keyword = "고양이사료"
 
 rank = 1
 done = False
