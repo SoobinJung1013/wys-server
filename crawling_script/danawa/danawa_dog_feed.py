@@ -1,17 +1,20 @@
-from pymongo import MongoClient
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium import webdriver
-from bs4 import BeautifulSoup
 import time
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+
+from webdriver_manager.chrome import ChromeDriverManager
+
+from pymongo import MongoClient
 from common.config import MONGO_ADMIN, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, MONGO_DATABASE
+
 
 # Mongo DB Ceonnection
 client = MongoClient(
     f"mongodb://{MONGO_ADMIN}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}")
 db = client[MONGO_DATABASE]
-collection = db["danawa_cat_feed"]
+collection = db["danawa_dog_feed_origin"]
 
 chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
@@ -24,7 +27,7 @@ driver.maximize_window()
 
 time.sleep(3)
 
-keyword = "고양이사료"
+keyword = "강아지사료"
 rank = 1
 done = False
 
