@@ -11,7 +11,7 @@ from common.config import MONGO_ADMIN, MONGO_PASSWORD, MONGO_HOST, MONGO_PORT, M
 client = MongoClient(
     f"mongodb://{MONGO_ADMIN}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}")
 db = client[MONGO_DATABASE]
-collection = db["danawa_cat_feed_origin"]
+collection = db["danawa_cat_feed"]
 
 chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
