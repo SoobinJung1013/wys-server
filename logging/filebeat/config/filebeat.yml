@@ -3,9 +3,14 @@ filebeat.inputs:
     paths:
       - /var/log/api-server/*.log
 
-output.logstash:
+output.kafka:
   enabled: true
-  hosts: ["logstash:5044"]
+  hosts: ["logstash:9092"]
+  topic: 'api-server'
+
+# output.logstash:
+#   enabled: true
+#   hosts: ["logstash:5044"]
 
 setup.kibana:
   host: "http://kibana:5601"
