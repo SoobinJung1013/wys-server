@@ -1,6 +1,16 @@
 spring:
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600
+      cache-null-values: true
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
+  main:
+    allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?useSSL=false&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?useSSL=false&serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
 
@@ -12,7 +22,7 @@ spring:
       username: ${MONGO_USERNAME}
       password: ${MONGO_PASSWORD}
       database: ${MONGO_DATABASE}
-\
+
 
   jpa:
     database: mysql
