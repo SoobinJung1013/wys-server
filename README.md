@@ -86,7 +86,8 @@ docker-compose -f docker-compose.prod.yml -f docker-compose.logging.yml down
 ## Run Crawlig Server
 
 ```shell
-cd crawling_server
+cd crawling_server/woo_young_soo
+python3 manage.py runserver --noreload 
 ```
 
 <br />
